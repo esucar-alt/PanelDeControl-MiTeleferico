@@ -1,0 +1,342 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+    /* Hace que al hacer clic en el nav, baje suavemente a la sección */
+    scroll-behavior: smooth;
+}
+
+body {
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    color: #2b2d42;
+    line-height: 1.6;
+}
+
+header {
+    /* Capa oscura encima (rgba) + imagen de fondo */
+    background-image: linear-gradient(rgba(29, 53, 87, 0.72), rgba(217, 4, 41, 0.65)), url('../img/header-teleferico.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    text-align: center;
+    padding: 50px 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+header h1 {
+    font-size: 2.2rem;
+    letter-spacing: 0.5px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.aviso-didactico {
+    background-color: #ffb703;
+    color: #1d1e2c;
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-top: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+nav {
+    background-color: #1d3557;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+nav ul li a {
+    display: block;
+    color: #f1faee;
+    text-decoration: none;
+    padding: 14px 22px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+nav ul li a:hover {
+    background-color: #e63946;
+    color: white;
+}
+
+main {
+    max-width: 920px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.tarjeta {
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-top: 6px solid #457b9d;
+    transition: transform 0.2s;
+}
+
+.tarjeta:hover {
+    transform: translateY(-3px);
+}
+
+/* Colores distintos para cada módulo (estilo líneas de teleférico) */
+#sec-detencion {
+    border-top-color: #e63946;
+}
+
+/* Línea Roja */
+#sec-mantenimiento {
+    border-top-color: #ffb703;
+}
+
+/* Línea Amarilla */
+#sec-viento {
+    border-top-color: #2a9d8f;
+}
+
+/* Línea Verde */
+#sec-sensores {
+    border-top-color: #0077b6;
+}
+
+/* Línea Azul */
+
+.tarjeta h2 {
+    color: #1d3557;
+    margin-bottom: 8px;
+    font-size: 1.4rem;
+}
+
+.ayuda {
+    font-size: 0.92rem;
+    color: #5c677d;
+    margin-bottom: 18px;
+    background-color: #f8f9fa;
+    padding: 8px 12px;
+    border-left: 4px solid #adb5bd;
+    border-radius: 4px;
+}
+
+.campo {
+    margin-bottom: 14px;
+}
+
+.campo label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #1d3557;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #dee2e6;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.campo input:focus,
+.campo select:focus {
+    outline: none;
+    border-color: #0077b6;
+    background-color: #f0f8ff;
+}
+
+.grid-viento {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+}
+
+button {
+    background: linear-gradient(90deg, #0077b6, #0096c7);
+    color: white;
+    border: none;
+    padding: 11px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 6px;
+    box-shadow: 0 3px 6px rgba(0, 119, 182, 0.3);
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+button:hover {
+    opacity: 0.92;
+    transform: scale(1.02);
+}
+
+.btn-eliminar {
+    background: linear-gradient(90deg, #d90429, #ef233c);
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 4px rgba(217, 4, 41, 0.3);
+}
+
+.caja-resultado {
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: none;
+}
+
+.resultado-ok {
+    display: block;
+    background-color: #d8f3dc;
+    color: #1b4332;
+    border-left: 5px solid #2d6a4f;
+}
+
+.resultado-alerta {
+    display: block;
+    background-color: #fff3b0;
+    color: #7f4f24;
+    border-left: 5px solid #e09f3e;
+}
+
+.resultado-error,
+.mensaje-error {
+    display: block;
+    background-color: #ffccd5;
+    color: #800f2f;
+    border-left: 5px solid #c9184a;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.mensaje-error:empty {
+    display: none;
+}
+
+.tabla-contenedor {
+    overflow-x: auto;
+    margin-top: 18px;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+th {
+    background-color: #1d3557;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tr:hover {
+    background-color: #e9ecef;
+}
+
+footer {
+    text-align: center;
+    padding: 25px 15px;
+    background-color: #1d3557;
+    color: #f1faee;
+    margin-top: 40px;
+    font-size: 0.95rem;
+}
+
+.subtexto-footer {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #a8dadc;
+}
+
+.redes-sociales {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.btn-red {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.88rem;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.btn-red:hover {
+    transform: translateY(-3px);
+    opacity: 0.9;
+}
+
+/* Colores distintivos por plataforma */
+.btn-web {
+    background-color: #e63946;
+}
+
+.btn-fb {
+    background-color: #1877f2;
+}
+
+.btn-ig {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+.btn-tt {
+    background-color: #000000;
+    border: 1px solid #444;
+}
+
+.btn-yt {
+    background-color: #ff0000;
+}
+
+.btn-x {
+    background-color: #14171a;
+    border: 1px solid #444;
+}
+
+/* Diseño adaptable para celulares */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .grid-viento {
+        grid-template-columns: 1fr;
+    }
+}

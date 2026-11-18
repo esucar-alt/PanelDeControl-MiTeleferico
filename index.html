@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Educativo - Sistema de Transporte por Cable</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Simulador Operativo de Teleférico</h1>
+        <p class="aviso-didactico">Nota: Todos los cálculos y umbrales son estrictamente didácticos y simulados, no
+            representan límites operativos reales.</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#sec-detencion">1. Detención</a></li>
+            <li><a href="#sec-mantenimiento">2. Mantenimiento</a></li>
+            <li><a href="#sec-viento">3. Viento</a></li>
+            <li><a href="#sec-sensores">4. Sensores</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- MÓDULO 1: DETENCIÓN DE EMERGENCIA -->
+        <section id="sec-detencion" class="tarjeta">
+            <h2>1. Detención de Emergencia</h2>
+            <p class="ayuda">Calcula la distancia recorrida durante el tiempo de reacción. Umbrales didácticos: Normal
+                (hasta 50 m) | Precaución (50 a 100 m) | Peligro (mayor a 100 m).</p>
+
+            <form id="form-detencion">
+                <div class="campo">
+                    <label for="velocidad">Velocidad de cabina (km/h):</label>
+                    <input type="number" id="velocidad" step="any" placeholder="Ej: 72">
+                </div>
+                <div class="campo">
+                    <label for="tiempo">Tiempo de reacción (segundos):</label>
+                    <input type="number" id="tiempo" step="any" placeholder="Ej: 3">
+                </div>
+                <button type="submit">Calcular Distancia</button>
+            </form>
+
+            <div id="resultado-detencion" class="caja-resultado"></div>
+        </section>
+
+        <!-- MÓDULO 2: MANTENIMIENTO -->
+        <!-- MÓDULO 2: MANTENIMIENTO -->
+        <section id="sec-mantenimiento" class="tarjeta">
+            <h2>2. Control de Mantenimiento</h2>
+            <p class="ayuda">Selecciona la línea y el componente. Si eliges "Cabina de pasajeros", podrás indicar el
+                número específico de cabina dañada o en revisión.</p>
+
+            <form id="form-mantenimiento">
+                <div class="campo">
+                    <label for="linea">Línea del teleférico:</label>
+                    <select id="linea">
+                        <option value="">-- Seleccione una línea --</option>
+                        <option value="Línea Roja">Línea Roja</option>
+                        <option value="Línea Amarilla">Línea Amarilla</option>
+                        <option value="Línea Verde">Línea Verde</option>
+                        <option value="Línea Azul">Línea Azul</option>
+                        <option value="Línea Naranja">Línea Naranja</option>
+                        <option value="Línea Blanca">Línea Blanca</option>
+                        <option value="Línea Celeste">Línea Celeste</option>
+                        <option value="Línea Morada">Línea Morada</option>
+                        <option value="Línea Café">Línea Café</option>
+                        <option value="Línea Plateada">Línea Plateada</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="componente">Nombre del componente:</label>
+                    <select id="componente">
+                        <option value="">-- Seleccione un componente --</option>
+                        <option value="Cabina de pasajeros">Cabina de pasajeros</option>
+                        <option value="Cable portador-tractor">Cable portador-tractor</option>
+                        <option value="Pinza desembragable (Mordaza)">Pinza desembragable (Mordaza)</option>
+                        <option value="Polea de torre (Balancín)">Polea de torre (Balancín)</option>
+                        <option value="Volante motriz">Volante motriz</option>
+                        <option value="Motor eléctrico principal">Motor eléctrico principal</option>
+                        <option value="Freno de emergencia hidráulico">Freno de emergencia hidráulico</option>
+                        <option value="Anemómetro (Sensor de viento)">Anemómetro (Sensor de viento)</option>
+                    </select>
+                </div>
+
+                <!-- Campo oculto por defecto: solo aparece si se elige "Cabina de pasajeros" -->
+                <div class="campo" id="campo-num-cabina" style="display: none;">
+                    <label for="num-cabina">Número de cabina:</label>
+                    <input type="number" id="num-cabina" placeholder="Ej: 15 (Plateada máx. 35 / Morada máx. 120)">
+                </div>
+
+                <div class="campo">
+                    <label for="horas">Horas acumuladas de operación:</label>
+                    <input type="number" id="horas" placeholder="Ej: 4500">
+                </div>
+
+                <div class="campo">
+                    <label for="estado">Estado actual:</label>
+                    <select id="estado">
+                        <option value="Normal">Normal (Operativo)</option>
+                        <option value="Revisión">Revisión (Mantenimiento preventivo)</option>
+                        <option value="Urgente">Urgente (Fuera de operación)</option>
+                    </select>
+                </div>
+
+                <button type="submit">Agregar Componente</button>
+            </form>
+
+            <div id="error-mantenimiento" class="mensaje-error"></div>
+
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Línea</th>
+                            <th>Componente</th>
+                            <th>Horas</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-mantenimiento">
+                        <!-- Filas generadas con JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- MÓDULO 3: VIENTO Y OSCILACIÓN -->
+        <section id="sec-viento" class="tarjeta">
+            <h2>3. Viento y Oscilación</h2>
+            <p class="ayuda">Ingresa 5 mediciones de velocidad de viento (km/h). Umbrales didácticos según promedio:
+                Normal (hasta 30 km/h) | Brusco (30 a 50 km/h) | Peligro (mayor a 50 km/h).</p>
+
+            <form id="form-viento">
+                <div class="grid-viento">
+                    <div class="campo">
+                        <label for="v1">Medición 1:</label>
+                        <input type="number" id="v1" step="any" placeholder="Ej: 10">
+                    </div>
+                    <div class="campo">
+                        <label for="v2">Medición 2:</label>
+                        <input type="number" id="v2" step="any" placeholder="Ej: 20">
+                    </div>
+                    <div class="campo">
+                        <label for="v3">Medición 3:</label>
+                        <input type="number" id="v3" step="any" placeholder="Ej: 30">
+                    </div>
+                    <div class="campo">
+                        <label for="v4">Medición 4:</label>
+                        <input type="number" id="v4" step="any" placeholder="Ej: 40">
+                    </div>
+                    <div class="campo">
+                        <label for="v5">Medición 5:</label>
+                        <input type="number" id="v5" step="any" placeholder="Ej: 50">
+                    </div>
+                </div>
+                <button type="submit">Analizar Mediciones</button>
+            </form>
+
+            <div id="resultado-viento" class="caja-resultado"></div>
+        </section>
+
+        <!-- MÓDULO 4: SENSORES -->
+        <section id="sec-sensores" class="tarjeta">
+            <h2>4. Validación de Sensores</h2>
+            <p class="ayuda">El código debe cumplir exactamente el formato <strong>SEN-000</strong> (tres dígitos al
+                final, ej: SEN-001). Selecciona el tipo de sensor o elige "Otro" para escribirlo.</p>
+
+            <form id="form-sensores">
+                <div class="campo">
+                    <label for="codigo-sensor">Código de sensor:</label>
+                    <input type="text" id="codigo-sensor" placeholder="Ej: SEN-001">
+                </div>
+
+                <div class="campo">
+                    <label for="tipo-sensor">Tipo de sensor:</label>
+                    <select id="tipo-sensor">
+                        <option value="">-- Seleccione un tipo de sensor --</option>
+                        <option value="Sensor de tensión de cable">Sensor de tensión de cable</option>
+                        <option value="Anemómetro (Velocidad de viento)">Anemómetro (Velocidad de viento)</option>
+                        <option value="Sensor de temperatura de motor">Sensor de temperatura de motor</option>
+                        <option value="Sensor de posición de pinza">Sensor de posición de pinza</option>
+                        <option value="Sensor de velocidad de volante">Sensor de velocidad de volante</option>
+                        <option value="Sensor de cierre de puertas de cabina">Sensor de cierre de puertas de cabina
+                        </option>
+                        <option value="Otro">Otro (Especificar manualmente)</option>
+                    </select>
+                </div>
+
+                <!-- Campo oculto por defecto: solo aparece si se elige "Otro" -->
+                <div class="campo" id="campo-otro-sensor" style="display: none;">
+                    <label for="otro-sensor">Especifique el tipo de sensor:</label>
+                    <input type="text" id="otro-sensor" placeholder="Ej: Sensor de vibración de torre">
+                </div>
+
+                <div class="campo">
+                    <label for="lectura-sensor">Lectura numérica (valor medido):</label>
+                    <input type="number" id="lectura-sensor" step="any" placeholder="Ej: 45.5">
+                </div>
+
+                <button type="submit">Registrar Sensor</button>
+            </form>
+
+            <div id="error-sensores" class="mensaje-error"></div>
+
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Tipo</th>
+                            <th>Lectura</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-sensores">
+                        <!-- Filas generadas con JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Proyecto Académico - Programación Web 1 | Simulación Educativa</p>
+        <p class="subtexto-footer">Canales oficiales de referencia (Mi Teleférico):</p>
+
+        <div class="redes-sociales">
+            <a href="https://www.miteleferico.bo/" target="_blank" rel="noopener noreferrer"
+                class="btn-red btn-web">Sitio Web</a>
+            <a href="https://www.facebook.com/miteleferico" target="_blank" rel="noopener noreferrer"
+                class="btn-red btn-fb">Facebook</a>
+            <a href="https://www.instagram.com/miteleferico/" target="_blank" rel="noopener noreferrer"
+                class="btn-red btn-ig">Instagram</a>
+            <a href="https://www.tiktok.com/@miteleferico" target="_blank" rel="noopener noreferrer"
+                class="btn-red btn-tt">TikTok</a>
+            <a href="https://www.youtube.com/@MiTelefericoOficial" target="_blank" rel="noopener noreferrer"
+                class="btn-red btn-yt">YouTube</a>
+            <a href="https://x.com/miteleferico" target="_blank" rel="noopener noreferrer" class="btn-red btn-x">X
+                (Twitter)</a>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
